@@ -1,0 +1,30 @@
+# Secrets / runtime
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.token
+
+# OpenClaw runtime/state
+.openclaw/
+logs/
+*.log
+
+# Potentially sensitive local notes
+TOOLS.md
+
+# Temp/build/cache
+tmp/
+.cache/
+node_modules/
+__pycache__/
+*.pyc
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
