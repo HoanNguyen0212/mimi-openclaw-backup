@@ -1,59 +1,66 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Quick rollback for ~/.openclaw/workspace git repo
+# Rollback workspace repo with optional interactive commit picker.
 # Usage:
-#   rollback-openclaw.sh <ref> [--push]
-# Example:
-#   rollback-openclaw.sh HEAD~1 --push
+#   rollback-openclaw.sh [ref] [--pick] [--push]
 
 REPO_DIR="${OPENCLAW_WORKSPACE:-$HOME/.openclaw/workspace}"
-REF="${1:-}"
-PUSH="${2:-}"
+REF=""
+PUSH="false"
+PICK="false"
 
-if [ -z "$REF" ]; then
-  echo "Usage: $0 <ref> [--push]" >&2
-  exit 1
-fi
+for arg in "$@"; do
+  case "$arg" in
+    --push) PUSH="true" ;;
+    --pick) PICK="true" ;;
+    -h|--help)
+      echo "Usage: $0 [ref] [--pick] [--push]"
+      exit 0
+      ;;
+    *)
+      if [ -z "$REF" ]; then REF="$arg"; else echo "[rollback] Unexpected argument: $arg" >&2; exit 1; fi
+      ;;
+  esac
+done
 
 cd "$REPO_DIR"
 
-if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  echo "[rollback] Not a git repository: $REPO_DIR" >&2
-  exit 1
-fi
-
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo "[rollback] Not a git repository: $REPO_DIR" >&2; exit 1; }
 if ! git diff --quiet || ! git diff --cached --quiet; then
   echo "[rollback] Working tree has uncommitted changes. Commit/stash first." >&2
   exit 1
 fi
 
-current_branch="$(git rev-parse --abbrev-ref HEAD)"
-if [ "$current_branch" != "main" ]; then
-  echo "[rollback] Warning: current branch is '$current_branch' (expected 'main')."
+if [ "$PICK" = "true" ] || [ -z "$REF" ]; then
+  echo "[rollback] Chọn bản muốn quay lại (10 bản gần nhất):"
+  git log --oneline -n 10 | nl -w2 -s'. '
+  read -r -p "Nhập số thứ tự (1-10): " idx
+  [[ "$idx" =~ ^[0-9]+$ ]] || { echo "[rollback] Số không hợp lệ" >&2; exit 1; }
+  REF="$(git log --oneline -n 10 | sed -n "${idx}p" | awk '{print $1}')"
+  [ -n "$REF" ] || { echo "[rollback] Không tìm thấy commit cho lựa chọn: $idx" >&2; exit 1; }
 fi
 
-# Safety snapshot before rollback
 stamp="$(date +'%Y%m%d-%H%M%S')"
 safety_tag="pre-rollback-${stamp}"
 git tag "$safety_tag"
 echo "[rollback] Safety tag created: $safety_tag"
 
-# Ensure we know remote refs when available
-if git remote get-url origin >/dev/null 2>&1; then
-  git fetch origin --prune || true
-fi
+git fetch origin --prune >/dev/null 2>&1 || true
+
+target_line="$(git log --oneline -n 1 "$REF" 2>/dev/null || true)"
+[ -n "$target_line" ] || { echo "[rollback] Ref không hợp lệ: $REF" >&2; exit 1; }
+
+echo "[rollback] Sẽ rollback về: $target_line"
+read -r -p "Xác nhận rollback? (yes/no): " confirm
+[ "$confirm" = "yes" ] || { echo "[rollback] Hủy"; exit 0; }
 
 git reset --hard "$REF"
 echo "[rollback] Rolled back to: $(git rev-parse --short HEAD)"
 
-if [ "$PUSH" = "--push" ]; then
-  if git remote get-url origin >/dev/null 2>&1; then
-    git push --force-with-lease origin main
-    echo "[rollback] Force-pushed rollback to origin/main"
-  else
-    echo "[rollback] No remote 'origin' configured; skipped push"
-  fi
+if [ "$PUSH" = "true" ]; then
+  git push --force-with-lease origin main
+  echo "[rollback] Force-pushed rollback to origin/main"
 fi
 
 echo "[rollback] Done"
