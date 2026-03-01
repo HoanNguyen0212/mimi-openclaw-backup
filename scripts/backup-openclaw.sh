@@ -10,8 +10,20 @@ if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   exit 1
 fi
 
-# Stage safe files only (respecting .gitignore)
-git add -A
+# Stage a strict allowlist (avoid accidental commits)
+paths=(
+  AGENTS.md
+  SOUL.md
+  USER.md
+  IDENTITY.md
+  HEARTBEAT.md
+  MEMORY.md
+  memory/
+)
+
+for p in "${paths[@]}"; do
+  [ -e "$p" ] && git add "$p"
+done
 
 if git diff --cached --quiet; then
   echo "[backup] No changes to commit"
