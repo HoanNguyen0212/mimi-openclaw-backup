@@ -11,4 +11,12 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
 
 ## Preference & Ops (2026-03-05)
 - Sếp muốn theo dõi model hiện hành thường xuyên; nên trả lời ngắn gọn, trực tiếp khi hỏi "model đang dùng".
-- Với môi trường này, ưu tiên quản lý dịch vụ bằng PM2; khi lỗi dịch vụ cần kiểm tra xung đột PATH/binary trước khi kết luận lỗi config.
+- Ghi chú cũ (đã supersede): từng ưu tiên quản lý dịch vụ bằng PM2; hiện không áp dụng cho OpenClaw gateway.
+
+## ClawBrain Ops Baseline (2026-03-06)
+- OpenClaw gateway không chạy qua PM2; vận hành theo một tiến trình duy nhất để tránh kẹt bản cũ/mới sau restart.
+- ClawBrain backend chuẩn: PostgreSQL + Redis local.
+- Env vận hành tập trung tại `~/.openclaw/brain.env`; script khởi chạy chuẩn tại `workspace/scripts/start-openclaw-brain.sh`.
+- Embeddings hiện chuyển sang GitHub Models endpoint (`https://models.inference.ai.azure.com`) với model `text-embedding-3-small`.
+- Đã test pass: `/embeddings` HTTP 200, vector 1536 chiều; remember/recall hoạt động ổn.
+- Checklist vận hành nhanh: 1 gateway PID duy nhất + `pg_isready` + `redis-cli ping` + test semantic remember/recall.
