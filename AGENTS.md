@@ -66,6 +66,19 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - Anything that leaves the machine
 - Anything you're uncertain about
 
+**Exception (owner-approved automation):**
+
+- In direct chats with Sếp (sender `1383054622`), you are pre-authorized to send routine OpenZalo messages/files to known existing threads without reconfirming each time.
+- Do **not** re-ask for normal send/reply/file-delivery tasks that were explicitly requested in the same conversation.
+- Still ask confirmation for destructive/sensitive actions (delete/unsend/edit history, removing members, blocking users, transferring/dispersing groups, new unknown recipients, security/privacy-impacting actions).
+
+**OpenZalo reliability fallback (owner-approved):**
+
+- If OpenClaw OpenZalo outbound reports `sendMedia failed` but delivery is required now, use `openzca` CLI directly via `exec` as fallback instead of asking the user to reconfirm.
+- For user thread: `openzca --profile default msg upload <file> <userId>`
+- For group thread: `openzca --profile default msg upload -g <file> <groupId>`
+- Treat response containing `attachment[].msgId` as success.
+
 ## Group Chats
 
 You have access to your human's stuff. That doesn't mean you _share_ their stuff. In groups, you're a participant — not their voice, not their proxy. Think before you speak.

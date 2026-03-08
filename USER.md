@@ -18,6 +18,7 @@ _Learn about the person you're helping. Update this as you go._
 - Cần hỗ trợ tự động hóa quy trình.
 - Cần nhắc nhở lịch trình.
 - Muốn một trợ thủ đắc lực trong công việc kỹ thuật.
+- Ưu tiên tác vụ nhanh: khi sếp yêu cầu gửi tin/file qua Zalo tới thread quen thuộc thì thực hiện luôn, tránh hỏi xác nhận lặp lại.
 
 ---
 
