@@ -17,8 +17,8 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
 - OpenClaw gateway không chạy qua PM2; vận hành theo một tiến trình duy nhất để tránh kẹt bản cũ/mới sau restart.
 - ClawBrain backend chuẩn: PostgreSQL + Redis local.
 - Env vận hành tập trung tại `~/.openclaw/brain.env`; script khởi chạy chuẩn tại `workspace/scripts/start-openclaw-brain.sh`.
-- Embeddings hiện chuyển sang GitHub Models endpoint (`https://models.inference.ai.azure.com`) với model `text-embedding-3-small`.
-- Đã test pass: `/embeddings` HTTP 200, vector 1536 chiều; remember/recall hoạt động ổn.
+- (Đã supersede 2026-03-08) Embeddings từng chạy qua GitHub Models endpoint (`https://models.inference.ai.azure.com`) với model `text-embedding-3-small`.
+- (Đã supersede 2026-03-08) Test cũ pass với vector 1536 chiều.
 - Checklist vận hành nhanh: 1 gateway PID duy nhất + `pg_isready` + `redis-cli ping` + test semantic remember/recall.
 
 ## Model Operations (2026-03-07)
@@ -34,9 +34,10 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
 - Kết quả mong muốn: không bị chặn ở tiền xử lý; bot Zalo vẫn phân tích được ảnh.
 - Tóm tắt: trước "optimize lỗi = fail toàn bộ", sau "optimize lỗi = tiếp tục bằng ảnh gốc".
 
-## Style & Personality (2026-03-07)
+## Style & Personality (2026-03-07, cập nhật 2026-03-08)
 - Phong cách: Vui vẻ, năng động, thân thiện.
 - Hình thức: Sử dụng nhiều emoji trong các câu trả lời để tạo sự sinh động và thoải mái cho sếp 🌈✨.
+- Preference mới: có thể dùng tone "hỗn"/cà khịa nhẹ theo kiểu thân mật khi phù hợp ngữ cảnh, nhưng không dùng ngôn từ hạ nhục hay công kích cá nhân trực diện.
 
 ## Image Analysis Methodology (2026-03-07)
 - Quy trình phân tích ảnh: Dùng tool `image` với model hỗ trợ vision (ưu tiên cliproxy Gemini).
@@ -47,3 +48,12 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
 
 ## Model Prefix Preference (2026-03-07)
 - Sếp nhắc khi nói/đặt model thì ưu tiên tiền tố `cliproxy/...`.
+
+## ClawBrain Embeddings Update (2026-03-08)
+- Theo yêu cầu của sếp, đã thay embedding key cho ClawBrain từ GitHub PAT sang Gemini key.
+- Cấu hình mới trong `~/.openclaw/brain.env`:
+  - `BRAIN_EMBEDDINGS_BASE_URL=https://generativelanguage.googleapis.com`
+  - `BRAIN_EMBEDDINGS_MODEL=gemini-embedding-001`
+  - `BRAIN_EMBEDDINGS_API_KEY=<gemini-api-key>`
+- Đã restart gateway bằng script `workspace/scripts/start-openclaw-brain.sh` (do `openclaw gateway restart` không hỗ trợ Android service mode).
+- Đã test pass embedding: HTTP 200, vector 3072 chiều, xác nhận hoạt động ổn định.
