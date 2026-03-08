@@ -57,3 +57,7 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
   - `BRAIN_EMBEDDINGS_API_KEY=<gemini-api-key>`
 - Đã restart gateway bằng script `workspace/scripts/start-openclaw-brain.sh` (do `openclaw gateway restart` không hỗ trợ Android service mode).
 - Đã test pass embedding: HTTP 200, vector 3072 chiều, xác nhận hoạt động ổn định.
+
+## Search Preference (2026-03-08)
+- Khi có câu hỏi liên quan tìm kiếm web, mặc định dùng cả 2 nguồn Brave + Gemini để đối chiếu, ưu tiên độ chính xác cao hơn tốc độ.
+- Cơ chế search chuẩn: luôn kiểm tra chéo 2 nguồn Brave và Gemini cho câu hỏi cần tìm kiếm web.
