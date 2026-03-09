@@ -21,10 +21,11 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
 - (Đã supersede 2026-03-08) Test cũ pass với vector 1536 chiều.
 - Checklist vận hành nhanh: 1 gateway PID duy nhất + `pg_isready` + `redis-cli ping` + test semantic remember/recall.
 
-## Model Operations (2026-03-07)
+## Model Operations (2026-03-07, Cập nhật 2026-03-09)
 - Cách chuyển model: dùng `session_status(model="tên-model")`.
 - Quy tắc đặt tên: Ưu tiên dùng tiền tố `cliproxy/` (ví dụ: `cliproxy/gemini-3-flash`).
 - Sau khi chuyển, luôn gửi một xác nhận ngắn gọn kèm tên model hiện hành cho sếp.
+- **Lưu ý 2026-03-09:** Nếu gặp lỗi `500 auth_unavailable`, hãy chủ động dùng `session_status(model="cliproxy/gemini-3-flash")` để ép nhận diện đúng model và làm mới luồng xác thực (auth session). Đây là cách sửa nhanh và hiệu quả nhất khi sếp yêu cầu chuyển model.
 
 ## Image Tool Fix (2026-03-07)
 - Lỗi gốc: bước image optimizer có thể fail trên Termux (`Failed to optimize image`) trước khi gửi ảnh sang model.
