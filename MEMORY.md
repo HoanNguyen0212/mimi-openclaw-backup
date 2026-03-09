@@ -23,9 +23,14 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
 
 ## Model Operations (2026-03-07, Cập nhật 2026-03-09)
 - Cách chuyển model: dùng `session_status(model="tên-model")`.
-- Quy tắc đặt tên: Ưu tiên dùng tiền tố `cliproxy/` (ví dụ: `cliproxy/gemini-3-flash`).
+- Quy tắc đặt tên: BẮT BUỘC dùng tiền tố `cliproxy/` cho mọi model và mọi tool (bao gồm `image`, `pdf`, `session_status`, v.v.) để đảm bảo định tuyến đúng và xác thực ổn định.
+- Danh sách model hay dùng: `cliproxy/gemini-3-flash`, `cliproxy/gemini-2.5-flash`, `cliproxy/gpt-5.3-codex`.
 - Sau khi chuyển, luôn gửi một xác nhận ngắn gọn kèm tên model hiện hành cho sếp.
-- **Lưu ý 2026-03-09:** Nếu gặp lỗi `500 auth_unavailable`, hãy chủ động dùng `session_status(model="cliproxy/gemini-3-flash")` để ép nhận diện đúng model và làm mới luồng xác thực (auth session). Đây là cách sửa nhanh và hiệu quả nhất khi sếp yêu cầu chuyển model.
+- **Lưu ý quan trọng 2026-03-09:** Khi gặp lỗi `500 auth_unavailable` hoặc khi cần "làm mới" phiên làm việc, hãy chủ động dùng `session_status(model="cliproxy/gemini-3-flash")` (hoặc model cliproxy tương ứng) để ép nhận diện và tái xác thực hệ thống.
+- **Danh sách models Cliproxy hệ thống (Ghi nhớ 2026-03-09):**
+    * Gemini: `cliproxy/gemini-3-flash`, `cliproxy/gemini-2.5-flash`, `cliproxy/gemini-2.5-pro`, và các bản google/gemini tương ứng.
+    * Codex: `cliproxy/gpt-5.3-codex`, `cliproxy/gpt-5.2-codex`, `cliproxy/gpt-5.1-codex-mini`.
+    * Khác: `cliproxy/anthropic/claude-sonnet-4.6`, `cliproxy/anthropic/claude-opus-4.5`, `cliproxy/openai/o3`, `cliproxy/openai/gpt-5.4`, `cliproxy/deepseek/deepseek-chat-v3.1`, `cliproxy/deepseek/deepseek-r1-0528`, `cliproxy/x-ai/grok-4`, `cliproxy/qwen/qwen3-max`, `cliproxy/mistralai/mistral-large-2512`.
 
 ## Image Tool Fix (2026-03-07)
 - Lỗi gốc: bước image optimizer có thể fail trên Termux (`Failed to optimize image`) trước khi gửi ảnh sang model.

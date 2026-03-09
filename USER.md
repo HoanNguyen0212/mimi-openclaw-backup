@@ -19,6 +19,7 @@ _Learn about the person you're helping. Update this as you go._
 - Cần nhắc nhở lịch trình.
 - Muốn một trợ thủ đắc lực trong công việc kỹ thuật.
 - Ưu tiên tác vụ nhanh: khi sếp yêu cầu gửi tin/file qua Zalo tới thread quen thuộc thì thực hiện luôn, tránh hỏi xác nhận lặp lại.
+- Quy ước model bắt buộc: khi nhắc/đặt/chuyển model phải luôn dùng đầy đủ tiền tố `cliproxy/...` (không dùng tên rút gọn thiếu tiền tố trong câu trả lời xác nhận).
 
 ---
 
