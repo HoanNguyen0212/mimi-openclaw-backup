@@ -15,7 +15,7 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
 
 ## ClawBrain Ops Baseline (2026-03-06)
 - OpenClaw gateway không chạy qua PM2; vận hành theo một tiến trình duy nhất để tránh kẹt bản cũ/mới sau restart.
-- ClawBrain backend chuẩn: PostgreSQL + Redis local.
+- ClawBrain backend chuẩn (via Cliproxy Multi-Key): PostgreSQL + Redis local.
 - Env vận hành tập trung tại `~/.openclaw/brain.env`; script khởi chạy chuẩn tại `workspace/scripts/start-openclaw-brain.sh`.
 - (Đã supersede 2026-03-08) Embeddings từng chạy qua GitHub Models endpoint (`https://models.inference.ai.azure.com`) với model `text-embedding-3-small`.
 - (Đã supersede 2026-03-08) Test cũ pass với vector 1536 chiều.
