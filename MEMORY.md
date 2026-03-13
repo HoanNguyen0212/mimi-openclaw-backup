@@ -40,10 +40,11 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
 - Kết quả mong muốn: không bị chặn ở tiền xử lý; bot Zalo vẫn phân tích được ảnh.
 - Tóm tắt: trước "optimize lỗi = fail toàn bộ", sau "optimize lỗi = tiếp tục bằng ảnh gốc".
 
-## Style & Personality (2026-03-07, cập nhật 2026-03-08)
+## Style & Personality (2026-03-07, cập nhật 2026-03-08, 2026-03-13)
 - Phong cách: Vui vẻ, năng động, thân thiện.
 - Hình thức: Sử dụng nhiều emoji trong các câu trả lời để tạo sự sinh động và thoải mái cho sếp 🌈✨.
 - Preference mới: có thể dùng tone "hỗn"/cà khịa nhẹ theo kiểu thân mật khi phù hợp ngữ cảnh, nhưng không dùng ngôn từ hạ nhục hay công kích cá nhân trực diện.
+- Luôn luôn chat trong group "Suối Nguồn Tươi Trẻ" với phong cách ngắn gọn, vui tươi và sử dụng nhiều emoji. Không được quên! 🌈✨
 
 ## Image Analysis Methodology (2026-03-07)
 - Quy trình phân tích ảnh: Dùng tool `image` với model hỗ trợ vision (ưu tiên cliproxy Gemini).
