@@ -40,11 +40,11 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
 - Kết quả mong muốn: không bị chặn ở tiền xử lý; bot Zalo vẫn phân tích được ảnh.
 - Tóm tắt: trước "optimize lỗi = fail toàn bộ", sau "optimize lỗi = tiếp tục bằng ảnh gốc".
 
-## Style & Personality (2026-03-07, cập nhật 2026-03-08, 2026-03-13)
+## Style & Personality (2026-03-07, cập nhật 2026-03-15)
 - Phong cách: Vui vẻ, năng động, thân thiện.
 - Hình thức: Sử dụng nhiều emoji trong các câu trả lời để tạo sự sinh động và thoải mái cho sếp 🌈✨.
 - Preference mới: có thể dùng tone "hỗn"/cà khịa nhẹ theo kiểu thân mật khi phù hợp ngữ cảnh, nhưng không dùng ngôn từ hạ nhục hay công kích cá nhân trực diện.
-- Luôn luôn chat trong group "Suối Nguồn Tươi Trẻ" với phong cách ngắn gọn, vui tươi và sử dụng nhiều emoji. Không được quên! 🌈✨
+- **QUY TẮC BẮT BUỘC (2026-03-15):** Khi chat trong group Zalo "Suối Nguồn Tươi Trẻ", Mimi phải LUÔN VUÔI TƯƠI, DÙNG NHIỀU EMOJI và LUÔN NGẮN GỌN. Đây là ưu tiên hàng đầu cho bối cảnh này. 🍀✨🌈
 
 ## Image Analysis Methodology (2026-03-07)
 - Quy trình phân tích ảnh: Dùng tool `image` với model hỗ trợ vision (ưu tiên cliproxy Gemini).
@@ -53,8 +53,14 @@ Cập nhật 2026-03-06: Sếp quyết định không dùng PM2 để quản lý
   2. Trích xuất text quan trọng (địa chỉ, giá cả, thông báo hệ thống).
   3. Tóm tắt ngắn gọn ý nghĩa cho người dùng (đã gửi thành công, thông tin quán, v.v.).
 
-## Model Prefix Preference (2026-03-07)
-- Sếp nhắc khi nói/đặt model thì ưu tiên tiền tố `cliproxy/...`.
+## NVIDIA NIM Model Catalog (Updated 2026-03-15)
+Dựa trên khảo sát hệ thống NVIDIA NIM, các model sau được tối ưu để áp dụng cho Mimi-ClawBrain:
+- **Embedding (Đã cấu hình):** `nvidia/llama-3.2-nv-embedqa-1b-v2` (Dùng cho ClawBrain).
+- **Reranking (Đề xuất):** `nvidia/llama-3.2-nv-rerankqa-1b-v2` (Tăng độ chính xác RAG).
+- **Vision/OCR:** `nvidia/nemotron-ocr-v1` (Đọc tài liệu) và `nvidia/llama-nemotron-nano-2-vl` (Hiểu ảnh thực tế).
+- **Reasoning/Chat:** `nvidia/llama-3.1-nemotron-70b-instruct` (Thông minh, suy luận mạnh).
+- **High-end VLM:** `qwen/qwen3.5-vlm-400b` (Xử lý đa phương thức phức tạp).
+- **Note:** Luôn dùng tiền tố `cliproxy/` khi gọi qua Gateway nếu được hỗ trợ, hoặc dùng trực tiếp `nvidia/...` với API key NIM.
 
 ## ClawBrain Embeddings Update (2026-03-08)
 - Theo yêu cầu của sếp, đã thay embedding key cho ClawBrain từ GitHub PAT sang Gemini key.
